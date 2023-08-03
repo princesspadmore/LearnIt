@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:princess_project/groups_screen.dart';
 import 'package:princess_project/home_screen.dart';
 import 'package:princess_project/login_screen.dart';
+import 'package:princess_project/notifications_screen.dart';
+import 'package:princess_project/profile_screen.dart';
 import 'package:princess_project/register_screen.dart';
+import 'package:princess_project/search_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.blue,
         primarySwatch: Colors.lightBlue
       ),
-      home: const HomeScreen(),
+      home: const SearchScreen(),
     );
   }
 }

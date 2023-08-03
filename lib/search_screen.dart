@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:princess_project/bottom_nav_bar.dart';
 
-class GroupsScreen extends StatefulWidget {
-  const GroupsScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({super.key});
 
   @override
-  State<GroupsScreen> createState() => _GroupsScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _GroupsScreenState extends State<GroupsScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,15 +27,34 @@ class _GroupsScreenState extends State<GroupsScreen> {
                 children: [
                   const Center(
                     child: Text(
-                      'Groups',
+                      'Search Results',
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                     ),
                   ),
                   const Center(
                     child: Text(
-                      'You are in 3 groups',
+                      'We have 4 available groups for you',
                       style: TextStyle(fontSize: 15, color: Colors.blueGrey),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  GestureDetector(
+                    child: Row(
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            'not3.jpg',
+                            fit: BoxFit.fill,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        const Icon(Icons.add),
+                        const Text('Create a group'),
+                      ],
                     ),
                   ),
                   const SizedBox(
@@ -43,7 +62,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                   ),
                   ListTile(
                     tileColor: Colors.white,
-                    title: const Text('SharkBoys'),
+                    title: const Text('The Best Group'),
                     subtitle: Row(
                       children: [
                         ClipOval(
@@ -87,7 +106,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                   const SizedBox(height: 10,),
                   ListTile(
                     tileColor: Colors.white,
-                    title: const Text('Braininess'),
+                    title: const Text('The Learners'),
                     subtitle: Row(
                       children: [
                         ClipOval(
@@ -131,7 +150,51 @@ class _GroupsScreenState extends State<GroupsScreen> {
                   const SizedBox(height: 10,),
                   ListTile(
                     tileColor: Colors.white,
-                    title: const Text('Distinction'),
+                    title: const Text('Brainstormers'),
+                    subtitle: Row(
+                      children: [
+                        ClipOval(
+                          child: Image.asset(
+                            'not3.jpg',
+                            fit: BoxFit.fill,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
+                        ClipOval(
+                          child: Image.asset(
+                            'not3.jpg',
+                            fit: BoxFit.fill,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
+                        ClipOval(
+                          child: Image.asset(
+                            'not3.jpg',
+                            fit: BoxFit.fill,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
+                        ClipOval(
+                          child: Image.asset(
+                            'not3.jpg',
+                            fit: BoxFit.fill,
+                            width: 50,
+                            height: 50,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10,),
+                  ListTile(
+                    tileColor: Colors.white,
+                    title: const Text('StudyTok'),
                     subtitle: Row(
                       children: [
                         ClipOval(
@@ -173,7 +236,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                     ),
                   ),
                   Expanded(child: Container()),
-                  bottomNavBar()
+                  bottomNavBar(),
                 ],
               ),
             ),
