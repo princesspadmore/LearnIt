@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:princess_project/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -12,6 +15,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController numberController = TextEditingController();
   final TextEditingController programController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  Future<void> addUser(
+      String email, String referenceNumber, String program) async {
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
+    await users.doc(email).set({
+      'email': email,
+      'referenceNumber': referenceNumber,
+      'program': program,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: TextField(
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
@@ -78,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: TextField(
                     controller: numberController,
                     keyboardType: TextInputType.number,
@@ -97,7 +111,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: TextField(
                     controller: programController,
                     keyboardType: TextInputType.text,
@@ -116,7 +130,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   child: TextField(
                     controller: passwordController,
                     keyboardType: TextInputType.text,
@@ -134,13 +148,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   child: Center(
                     child: ElevatedButton(
                       style: ButtonStyle(
                         elevation: MaterialStateProperty.all(2),
                       ),
-                      onPressed: () {},
+                      onPressed: () async{
+                        String email = emailController.text;
+                        String password = passwordController.text;
+                        String program = programController.text;
+                        String reference = numberController.text;
+                        await addUser(email, reference, program);
+                        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: email, password: password);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const HomeScreen();
+                            },
+                          ),
+                        );
+                      },
                       child: const Text('Submit'),
                     ),
                   ),

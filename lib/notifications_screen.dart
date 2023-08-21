@@ -63,7 +63,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       ),
                     ),
                     title: const Text(
-                      'The Lerners',
+                      'The Learners',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: const Text(

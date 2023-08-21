@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:princess_project/home_screen.dart';
+import 'package:princess_project/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +14,27 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController numberController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  Future<String?> getUserEmailFromReference(String referenceNumber) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .where('referenceNumber', isEqualTo: referenceNumber)
+              .limit(1)
+              .get();
+
+      if (querySnapshot.size > 0) {
+        String email = querySnapshot.docs[0].get('email');
+        return email;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,8 +122,23 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: ButtonStyle(
                         elevation: MaterialStateProperty.all(2),
                       ),
-                      onPressed: () {},
-                      child: const Text('Log In'),
+                      onPressed: () async {
+                        String password = passwordController.text;
+                        String reference = numberController.text;
+                        String? email =
+                            await getUserEmailFromReference(reference);
+                        await FirebaseAuth.instance.signInWithEmailAndPassword(
+                            email: email!, password: password);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const HomeScreen();
+                            },
+                          ),
+                        );
+                      },
+                      child: const Text('Login'),
                     ),
                   ),
                 ),
@@ -115,7 +155,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Container(),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const RegisterScreen();
+                              },
+                            ),
+                          );
+                        },
                         child: const Text('Sign Up'),
                       ),
                     ],
