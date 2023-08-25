@@ -110,7 +110,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         'There is a scheduled meeting for 10am at the COS Library tomorrow'),
                   ),
                   Expanded(child: Container()),
-                  bottomNavBar(),
+                  bottomNavBar(context),
                 ],
               ),
             ),

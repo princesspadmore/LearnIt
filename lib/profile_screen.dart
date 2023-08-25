@@ -91,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: TextStyle(color: Colors.blueGrey, fontSize: 15),
                   ),
                   Expanded(child: Container()),
-                  bottomNavBar(),
+                  bottomNavBar(context),
                 ],
               ),
             ),

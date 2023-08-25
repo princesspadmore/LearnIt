@@ -236,7 +236,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
                   Expanded(child: Container()),
-                  bottomNavBar(),
+                  bottomNavBar(context),
                 ],
               ),
             ),

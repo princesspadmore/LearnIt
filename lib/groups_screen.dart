@@ -173,7 +173,7 @@ class _GroupsScreenState extends State<GroupsScreen> {
                     ),
                   ),
                   Expanded(child: Container()),
-                  bottomNavBar()
+                  bottomNavBar(context)
                 ],
               ),
             ),

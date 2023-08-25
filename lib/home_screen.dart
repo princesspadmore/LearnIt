@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Image.asset(
                   'group.jpg',
                   fit: BoxFit.cover,
-                  height: 330,
+                  height: 320,
                   width: 350,
                 ),
                 const Padding(
@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Expanded(child: Container()),
-                bottomNavBar(),
+                bottomNavBar(context),
               ],
             ),
           ),
