@@ -42,6 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: 30,
                   ),
                   GestureDetector(
+                    onTap: (){},
                     child: Row(
                       children: [
                         ClipOval(
@@ -235,8 +236,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       ],
                     ),
                   ),
-                  Expanded(child: Container()),
-                  bottomNavBar(context),
                 ],
               ),
             ),

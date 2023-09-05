@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:princess_project/home_screen.dart';
+import 'package:princess_project/main_navigation_screen.dart';
 import 'package:princess_project/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -133,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const HomeScreen();
+                              return const MainNavigation();
                             },
                           ),
                         );

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:princess_project/bottom_nav_bar.dart';
+import 'package:princess_project/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -47,7 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const SearchScreen();
+                                },
+                              ),
+                            );
+                          },
                           icon: const Icon(Icons.search),
                         ),
                         Expanded(child: Container()),
@@ -82,28 +93,37 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SizedBox(
-                  height: 150,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: const [
-                      GroupCard(),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      GroupCard(),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      GroupCard(),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      GroupCard(),
-                    ],
+                  height: 130,
+                  child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('groups').snapshots(),
+                    builder: (context, snapshot){
+                      if(snapshot.hasError){
+                        return Text('Error: ${snapshot.error}');
+                      }
+                      else if(snapshot.connectionState == ConnectionState.waiting){
+                        return const CircularProgressIndicator();
+                      }
+                      else{
+                        final groups = snapshot.data!.docs;
+                        return ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          itemCount: 5,
+                          itemBuilder: (context, index){
+                            final group = groups[index];
+                            return Row(
+                              children: [
+                                const SizedBox(width: 10,),
+                                GroupCard(name: group['name']),
+                                const SizedBox(width: 10,),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
                   ),
                 ),
-                Expanded(child: Container()),
-                bottomNavBar(context),
               ],
             ),
           ),
@@ -114,7 +134,9 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class GroupCard extends StatelessWidget {
-  const GroupCard({super.key});
+  final String name;
+  const GroupCard({super.key, required this.name});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -129,9 +151,9 @@ class GroupCard extends StatelessWidget {
             width: 150,
             fit: BoxFit.cover,
           ),
-          const Text(
-            'Group Name',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+          Text(
+            name,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
           )
         ],
       ),
